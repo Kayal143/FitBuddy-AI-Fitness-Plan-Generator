@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitBuddy - AI Fitness Plan Generator</title>
+<style>
+:root{--primary:#36c89b;--dark:#21433b;--bg:#eef8f4;--card:#fff}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#eef8f4,#f8fbfa);color:#24443d}
+.container{max-width:850px;margin:45px auto;padding:20px}
+.hero{text-align:center;margin-bottom:25px}.hero h1{font-size:42px;margin:10px}.hero p{color:#60746e}
+.card{background:var(--card);padding:28px;border-radius:22px;box-shadow:0 10px 35px rgba(30,80,65,.10);margin-bottom:20px}
+h2{margin-top:0;color:var(--dark)} label{display:block;font-weight:700;margin:14px 0 7px}
+input,select{width:100%;padding:13px;border:1px solid #d6e4df;border-radius:12px;font-size:16px;background:#fff}
+input:focus,select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(54,200,155,.12)}
+button{width:100%;margin-top:22px;padding:15px;border:0;border-radius:14px;background:linear-gradient(135deg,#36c89b,#79d9ba);color:#103d32;font-size:17px;font-weight:800;cursor:pointer}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}@media(max-width:650px){.grid{grid-template-columns:1fr}.container{margin:15px auto}}
+.note{background:#f1faf7;padding:15px;border-radius:12px;font-size:14px}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <h1>💪 FitBuddy</h1>
+    <p>AI Fitness Plan Generator</p>
+  </div>
+
+  <div class="card">
+    <h2>👤 Tell us about you</h2>
+    <form action="/generate-workout" method="post">
+      <label>Name</label>
+      <input type="text" name="username" placeholder="Enter your name" required>
+
+      <div class="grid">
+        <div>
+          <label>Age</label>
+          <input type="number" name="age" min="10" max="100" placeholder="19" required>
+        </div>
+        <div>
+          <label>Weight (kg)</label>
+          <input type="number" step="0.1" name="weight" min="20" max="300" placeholder="55" required>
+        </div>
+      </div>
+
+      <label>Fitness Goal</label>
+      <select name="goal" required>
+        <option value="weight_loss">Weight Loss</option>
+        <option value="muscle_gain">Muscle Gain</option>
+        <option value="general_fitness">General Fitness</option>
+      </select>
+
+      <label>Workout Intensity</label>
+      <select name="intensity" required>
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+      </select>
+
+      <div class="note" style="margin-top:18px">
+        FitBuddy creates a simple 7-day plan based on your inputs.
+      </div>
+
+      <button type="submit">✨ Generate My Plan</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

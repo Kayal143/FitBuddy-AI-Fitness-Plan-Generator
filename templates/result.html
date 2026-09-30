@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your FitBuddy Plan</title>
+<style>
+:root{--primary:#36c89b;--dark:#21433b;--bg:#eef8f4}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#eef8f4,#f8fbfa);color:#24443d}
+.container{max-width:900px;margin:35px auto;padding:20px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px}.top a{color:#176f5b;text-decoration:none;font-weight:700}
+h1{color:var(--dark)}h2{margin-top:0}.card{background:#fff;padding:24px;border-radius:20px;box-shadow:0 10px 35px rgba(30,80,65,.10);margin:18px 0}
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.pill{border:1px solid #e0ece8;border-radius:12px;padding:14px;background:#fbfefd}.pill b{display:block;font-size:13px;color:#6b7d77;margin-bottom:5px}
+.day{border-left:5px solid var(--primary);padding:15px 18px;margin:13px 0;background:#f8fcfa;border-radius:12px}.day h3{margin:0 0 8px}.day ul{margin:8px 0 0;padding-left:22px}
+textarea{width:100%;min-height:100px;border:1px solid #d6e4df;border-radius:12px;padding:14px;font:inherit}
+button{padding:14px 20px;border:0;border-radius:13px;background:linear-gradient(135deg,#36c89b,#79d9ba);font-weight:800;color:#103d32;cursor:pointer;margin-top:12px}
+.update{background:#f4fbf8}@media(max-width:650px){.info{grid-template-columns:1fr}.top{display:block}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="top">
+    <h1>💪 Your FitBuddy Plan</h1>
+    <a href="/">← Create New Plan</a>
+  </div>
+
+  <div class="card">
+    <h2>👤 User Information</h2>
+    <div class="info">
+      <div class="pill"><b>Name</b>{{ plan.name }}</div>
+      <div class="pill"><b>User ID</b>{{ plan.user_id }}</div>
+      <div class="pill"><b>Age</b>{{ plan.age }}</div>
+      <div class="pill"><b>Weight</b>{{ plan.weight }} kg</div>
+      <div class="pill"><b>Goal</b>{{ plan.goal }}</div>
+      <div class="pill"><b>Intensity</b>{{ plan.intensity }}</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🏋️ 7-Day Workout Plan</h2>
+    <p><b>Goal:</b> {{ plan.goal }} &nbsp; | &nbsp; <b>Intensity:</b> {{ plan.intensity }}</p>
+    <p><b>Focus:</b> {{ plan.focus }}</p>
+
+    {% for day, title, items in plan.days %}
+    <div class="day">
+      <h3>{{ day }} – {{ title }}</h3>
+      <ul>
+        {% for item in items %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="card">
+    <h2>🥗 Nutrition / Recovery Tip</h2>
+    <p>{{ plan.nutrition }}</p>
+    <p><b>General guidance:</b> Keep effort at a level where you can still speak comfortably. Drink water before and after workouts. Stop if you feel pain.</p>
+  </div>
+
+  {% if plan.update_message %}
+  <div class="card">
+    <h2>✅ Plan Updated</h2>
+    <p><b>Your request:</b> {{ plan.update_message }}</p>
+  </div>
+  {% endif %}
+
+  <div class="card update">
+    <h2>💬 Update Your Plan</h2>
+    <p>Tell FitBuddy what you want to change.</p>
+    <form action="/update-plan" method="post">
+      <input type="hidden" name="user_id" value="{{ plan.user_id }}">
+      <textarea name="change_request" placeholder="Example: Add more rest days or include more cardio..." required></textarea>
+      <button type="submit">Update My Plan</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>
